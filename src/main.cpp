@@ -9,7 +9,6 @@
 void initialize() {
   // pros::lcd::initialize();
   selector::init();
-  master.print(0, 0, "         c=3");
 }
 
 void disabled() {}
@@ -39,11 +38,13 @@ void autonomous() {
     awp();
   }
   if (selector::auton == 5) {
-    // NULL LMFAOOOOOOOOOOOOOO
+    // NULL or
+    test();
   }
 }
 
 void opcontrol() {
+  // SETUP
   flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   left_front.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   left_middle.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -51,9 +52,9 @@ void opcontrol() {
   right_front.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   right_middle.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   right_back.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-
   set_flywheel_speed(350);
 
+  // DRIVE LOOP
   while (true) {
     update_drivetrain();
     update_intake();
