@@ -1,9 +1,12 @@
 #pragma once
 
+/**
+ * @brief Sets pid constants for auton
+ */
 void snail_constants();
 
 /**
- * @brief Programming skills auton
+ * @brief Programming skills competition auton
  */
 void skills();
 
@@ -23,6 +26,6 @@ void right();
 void awp();
 
 /**
- * @brief auton for testing/tuning
+ * @brief Auton for testing/tuning
  */
 void test();
