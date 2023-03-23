@@ -13,7 +13,7 @@ const int INDEXER_RESET = 900; // ms
 // EZ TEMPLATE CHASSIS SETUP
 const std::vector<int> LEFT_MOTOR_PORTS = {2, 1, 3};
 const std::vector<int> RIGHT_MOTOR_PORTS = {5, 4, 6};
-const int IMU_PORT = 10;
+const int IMU_PORT = 9;
 const double WHEEL_DIAMETER = 3.25;
 const int CARTRIDGE_RPM = 600;
 // eg. if your drive is 84:36 where the 36t is sensored, your RATIO would
