@@ -20,10 +20,10 @@ void autonomous() {
   snail_constants();
   flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  left_middle.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  left_raised.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  right_middle.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  right_raised.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
   // AUTON SELECTOR
@@ -49,18 +49,19 @@ void opcontrol() {
   // SETUP
   flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   left_front.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  left_middle.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  left_raised.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   left_back.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   right_front.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  right_middle.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  right_raised.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   right_back.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  set_flywheel_speed(350);
+  // set_flywheel_speed(350);
 
   // DRIVE LOOP
   while (true) {
     update_drivetrain();
     update_intake();
     update_indexer();
+    update_flywheel();
 
     pros::delay(10);
   }

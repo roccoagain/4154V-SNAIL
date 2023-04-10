@@ -14,3 +14,5 @@ void update_intake();
  * @brief Updates indexer piston according to controller input
  */
 void update_indexer();
+
+void update_flywheel();

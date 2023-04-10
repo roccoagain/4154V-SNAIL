@@ -6,22 +6,22 @@
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 // MOTORS
-pros::Motor right_front(1, pros::E_MOTOR_GEARSET_06, true,
-                       pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor right_middle(2, pros::E_MOTOR_GEARSET_06, false,
+pros::Motor right_front(1, pros::E_MOTOR_GEARSET_06, false,
                         pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor right_back(3, pros::E_MOTOR_GEARSET_06, false,
-                      pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor left_front(4, pros::E_MOTOR_GEARSET_06, false,
-                        pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor left_middle(5, pros::E_MOTOR_GEARSET_06, true,
+pros::Motor right_raised(2, pros::E_MOTOR_GEARSET_06, true,
                          pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor left_back(6, pros::E_MOTOR_GEARSET_06, true,
+pros::Motor right_back(3, pros::E_MOTOR_GEARSET_06, false,
                        pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor left_front(4, pros::E_MOTOR_GEARSET_06, true,
+                       pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor left_raised(5, pros::E_MOTOR_GEARSET_06, false,
+                        pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor left_back(6, pros::E_MOTOR_GEARSET_06, true,
+                      pros::E_MOTOR_ENCODER_COUNTS);
 
-pros::Motor intake(7, pros::E_MOTOR_GEARSET_06, true,
+pros::Motor intake(8, pros::E_MOTOR_GEARSET_06, false,
                    pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor flywheel(8, pros::E_MOTOR_GEARSET_06, false,
+pros::Motor flywheel(9, pros::E_MOTOR_GEARSET_06, true,
                      pros::E_MOTOR_ENCODER_COUNTS);
 
 // PISTONS
