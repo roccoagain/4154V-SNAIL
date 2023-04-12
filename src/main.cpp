@@ -17,51 +17,41 @@ void competition_initialize() {}
 
 void autonomous() {
   // SETUP
-  snail_constants();
-  flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  left_raised.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  right_raised.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  auton::snail_constants();
+  devices::set_brakes(pros::E_MOTOR_BRAKE_HOLD);
 
   // AUTON SELECTOR
   if (selector::auton == 1) {
-    skills();
+    auton::skills();
   }
   if (selector::auton == 2) {
-    left();
+    auton::left();
   }
   if (selector::auton == 3) {
-    right();
+    auton::right();
   }
   if (selector::auton == 4) {
-    awp();
+    auton::awp();
   }
   if (selector::auton == 5) {
     // NULL or
-    test();
+    auton::test();
   }
 }
 
 void opcontrol() {
   // SETUP
-  flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  left_front.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  left_raised.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  left_back.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  right_front.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  right_raised.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  right_back.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-  // set_flywheel_speed(350);
+  devices::set_brakes(pros::E_MOTOR_BRAKE_COAST);
+  flywheel::retarget_pid(350);
 
   // DRIVE LOOP
   while (true) {
-    update_drivetrain();
-    update_intake();
-    update_indexer();
-    update_flywheel();
+    drive::drivetrain();
+    drive::intake();
+    drive::indexer();
+    drive::flywheel();
+    drive::flywheel_angler();
+    drive::intake_lifter();
 
     pros::delay(10);
   }

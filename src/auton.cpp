@@ -3,6 +3,7 @@
 #include "devices.h"
 #include "main.h"
 
+namespace auton {
 // DRIVE CONSTANTS
 const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 90;
@@ -35,16 +36,16 @@ void snail_constants() {
 
 // CUSTOM FUNCTIONS
 void spin_roller(int time) {
-  intake = -127;
+  devices::intake = -127;
   pros::delay(time);
-  intake = 0;
+  devices::intake = 0;
 }
 
 void index(int shot_count = 1) {
   for (int i = 0; i < shot_count; i++) {
-    indexer.set_value(true);
+    devices::indexer.set_value(true);
     pros::delay(INDEXER_HOLD);
-    indexer.set_value(false);
+    devices::indexer.set_value(false);
     pros::delay(INDEXER_RESET);
   }
 }
@@ -70,7 +71,8 @@ void test() {
   chassis.set_drive_pid(30, DRIVE_SPEED);
   chassis.wait_drive();
 
-  intake = 127;
+  devices::intake = 127;
   pros::delay(2000);
-  intake = -127;
+  devices::intake = -127;
 }
+} // namespace auton

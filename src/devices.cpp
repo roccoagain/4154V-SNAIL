@@ -2,7 +2,8 @@
 
 #include "main.h"
 
-// CONTROLLER
+namespace devices {
+
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 // MOTORS
@@ -26,6 +27,19 @@ pros::Motor flywheel(9, pros::E_MOTOR_GEARSET_06, true,
 
 // PISTONS
 pros::ADIDigitalOut indexer('A');
-pros::ADIDigitalOut angler('B');
+pros::ADIDigitalOut flywheel_angler('B');
 pros::ADIDigitalOut expander('C');
-pros::ADIDigitalOut lifter('D');
+pros::ADIDigitalOut intake_lifter('D');
+
+void set_brakes(pros::motor_brake_mode_e mode) {
+  devices::flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+
+  devices::left_front.set_brake_mode(mode);
+  devices::left_raised.set_brake_mode(mode);
+  devices::left_back.set_brake_mode(mode);
+  devices::right_front.set_brake_mode(mode);
+  devices::right_raised.set_brake_mode(mode);
+  devices::right_back.set_brake_mode(mode);
+}
+
+}  // namespace devices

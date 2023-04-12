@@ -1,18 +1,11 @@
 #pragma once
 
-/**
- * @brief Updates drivetrain according to controller input
- */
-void update_drivetrain();
-
-/**
- * @brief Updates intake according to controller input
- */
-void update_intake();
-
-/**
- * @brief Updates indexer piston according to controller input
- */
-void update_indexer();
-
-void update_flywheel();
+namespace drive {
+void drivetrain();
+void intake();
+void indexer();
+void flywheel();
+void flywheel_angler();
+void intake_lifter();
+void expansion();
+}

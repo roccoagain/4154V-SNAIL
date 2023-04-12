@@ -1,6 +1,8 @@
 #pragma once
 #include "main.h"
 
+namespace devices {
+
 // CONTROLLER
 extern pros::Controller master;
 
@@ -17,6 +19,10 @@ extern pros::Motor flywheel;
 
 // PISTONS
 extern pros::ADIDigitalOut indexer;
-extern pros::ADIDigitalOut angler;
+extern pros::ADIDigitalOut flywheel_angler;
 extern pros::ADIDigitalOut expander;
-extern pros::ADIDigitalOut lifter;
+extern pros::ADIDigitalOut intake_lifter;
+
+void set_brakes(pros::motor_brake_mode_e);
+
+}  // namespace devices

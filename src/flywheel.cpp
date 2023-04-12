@@ -3,7 +3,9 @@
 #include "devices.h"
 #include "main.h"
 
-void flywheelPID(double target) {
+namespace flywheel {
+
+void start_pid(double target) {
   double kP = 0.25;
   double kV = 0.21166;  // 127/600 (max voltage / max rpm)
 
@@ -14,7 +16,7 @@ void flywheelPID(double target) {
 
   while (true) {
     // CALCULATE VOLTAGE
-    error = target - flywheel.get_actual_velocity();
+    error = target - devices::flywheel.get_actual_velocity();
     output = (kV * target) + (kP * error);
 
     // CLAMP VOLTAGE
@@ -26,22 +28,24 @@ void flywheelPID(double target) {
     }
 
     // SET VOLTAGE
-    flywheel.move(output);
+    devices::flywheel.move(output);
     pros::delay(100);
 
     // OUTPUT FOR TUNING
     // printf("%lf error \n", error);
     // printf("%lf output \n", output);
-    // printf("%lf RPM \n \n", flywheel.get_actual_velocity());
+    printf("%lf RPM \n \n", devices::flywheel.get_actual_velocity());
   }
 }
 
-void set_flywheel_speed(double target) {
+void retarget_pid(double target) {
   static std::unique_ptr<pros::Task> pidTask{};
   if (pidTask != nullptr) {
     pidTask->remove();
   }
   pidTask = (target == -1)
                 ? nullptr
-                : std::make_unique<pros::Task>([=] { flywheelPID(target); });
+                : std::make_unique<pros::Task>([=] { start_pid(target); });
+}
+
 }
