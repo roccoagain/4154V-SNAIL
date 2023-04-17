@@ -86,16 +86,6 @@ void init(int hue, int default_auton, const char **autons) {
   lv_obj_set_pos(match_btnm, 0, 100);
   lv_obj_align(match_btnm, NULL, LV_ALIGN_CENTER, 0, 0);
 
-  // // skills tab
-  // lv_obj_t *skillsBtn = lv_btn_create(skillsTab, NULL);
-  // lv_obj_t *label = lv_label_create(skillsBtn, NULL);
-  // lv_label_set_text(label, "Skills");
-  // lv_btn_set_action(skillsBtn, LV_BTN_ACTION_CLICK, *skills_btn_action);
-  // // lv_btn_set_state(skillsBtn, LV_BTN_STATE_TGL_REL);
-  // lv_obj_set_size(skillsBtn, 450, 50);
-  // lv_obj_set_pos(skillsBtn, 0, 100);
-  // lv_obj_align(skillsBtn, NULL, LV_ALIGN_CENTER, 0, 0);
-
   // start tab watcher
   pros::Task tabWatcher_task(tab_watcher);
 }
