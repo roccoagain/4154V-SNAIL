@@ -30,8 +30,6 @@ void autonomous() {
       auton::awp();
       break;
     case 5:
-    default:
-      auton::test();
       break;
   }
 }
@@ -39,6 +37,9 @@ void autonomous() {
 void opcontrol() {
   devices::set_brakes(pros::E_MOTOR_BRAKE_COAST);
   // flywheel::retarget_pid(350);
+
+  devices::flywheel.move_velocity(drive::flywheel_velocity);
+  devices::flywheel_angler.set_value(drive::toggles.flywheel_angler_toggle);
 
   while (true) {
     drive::update_drivetrain();

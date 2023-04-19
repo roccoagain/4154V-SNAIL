@@ -1,26 +1,14 @@
 #include "auton.h"
 
 #include "devices.h"
-#include "main.h"
 
 namespace auton {
-
-constexpr int DRIVE_SPEED = 110;
-constexpr int TURN_SPEED = 90;
-constexpr int SWING_SPEED = 90;
-
-const std::vector<int> LEFT_MOTOR_PORTS = {-4, 5, -6};
-const std::vector<int> RIGHT_MOTOR_PORTS = {1, -2, 3};
-constexpr int IMU_PORT = 7;
-constexpr double WHEEL_DIAMETER = 2.75;
-constexpr int CARTRIDGE_RPM = 600;
-const double EXTERNAL_GEAR_RATIO = .8;  // 48:60
 Drive chassis(LEFT_MOTOR_PORTS, RIGHT_MOTOR_PORTS, IMU_PORT, WHEEL_DIAMETER,
               CARTRIDGE_RPM, EXTERNAL_GEAR_RATIO);
 
 void snail_constants() {
   chassis.set_slew_min_power(80, 80);
-  chassis.set_slew_distance(7, 7);
+  chassis.set_slew_distance(7*2, 7*2);
   chassis.set_pid_constants(&chassis.headingPID, 11, 0, 20, 0);
   chassis.set_pid_constants(&chassis.forward_drivePID, 0.45, 0, 5, 0);
   chassis.set_pid_constants(&chassis.backward_drivePID, 0.45, 0, 5, 0);
@@ -39,7 +27,6 @@ void shoot(int shot_count = 1) {
     devices::intake = -127;
     pros::delay(150);
     devices::intake = 0;
-    pros::delay(800);
   }
 }
 
@@ -95,7 +82,70 @@ void left() {
   devices::intake = 0;
 }
 
-void right() {}
+void right() {
+  chassis.reset_gyro();
+  chassis.reset_drive_sensor();
+  chassis.reset_pid_targets();
+
+  devices::flywheel.move_velocity(420);
+
+  // Get roller 1
+  chassis.set_drive_pid(-30, DRIVE_SPEED * .7);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-10, DRIVE_SPEED * .3);
+  chassis.wait_drive();
+  spin_roller(350);
+  chassis.set_drive_pid(10, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  // Face disc 1
+  devices::intake = 127;
+  chassis.set_turn_pid(40, TURN_SPEED);
+  chassis.wait_drive();
+  pros::delay(500);
+
+  // Intake 1
+  chassis.set_drive_pid(46, DRIVE_SPEED);
+  chassis.wait_drive();
+  pros::delay(200);
+
+  // Turn to face goal 1
+  chassis.set_turn_pid(112, TURN_SPEED);
+  chassis.wait_drive();
+  pros::delay(500);
+
+  // Shoot 1
+  shoot();
+  pros::delay(SHOT_DELAY);
+  shoot();
+  pros::delay(SHOT_DELAY);
+  shoot();
+
+  devices::flywheel.move_velocity(420);
+
+  // Intake 2
+  devices::intake = 127;
+  chassis.set_turn_pid(45, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(90, DRIVE_SPEED);
+  chassis.wait_drive();
+  pros::delay(2000);
+
+  // Face goal 2
+  chassis.set_turn_pid(145, TURN_SPEED);
+  chassis.wait_drive();
+  pros::delay(500);
+
+  shoot();
+  pros::delay(SHOT_DELAY);
+  shoot();
+
+  // All off
+  devices::flywheel = 0;
+  devices::intake = 0;
+}
 
 void awp() {
   chassis.reset_gyro();
@@ -103,12 +153,13 @@ void awp() {
   chassis.reset_pid_targets();
 
   // Set flywheel
-  devices::flywheel.move_velocity(480);
+  devices::flywheel.move_velocity(440);
+  // devices::flywheel = 120;
 
   // Get roller 1
-  chassis.set_drive_pid(-10, DRIVE_SPEED / 2);
+  chassis.set_drive_pid(-10, DRIVE_SPEED);
   chassis.wait_drive();
-  spin_roller(300);
+  spin_roller(350);
   chassis.set_drive_pid(8, DRIVE_SPEED);
   chassis.wait_drive();
 
@@ -125,42 +176,47 @@ void awp() {
   pros::delay(2000);
 
   // Turn to face goal
-  chassis.set_turn_pid(-20, TURN_SPEED);
+  chassis.set_turn_pid(-21, TURN_SPEED);
   chassis.wait_drive();
 
   // Shoot Triple Stack
-  shoot(3);
+  shoot();
+  pros::delay(SHOT_DELAY);
+  shoot();
+  pros::delay(SHOT_DELAY);
+  shoot();
 
-  // Drive to roller 2
+  // Drive to shoot 2
   devices::intake = 127;
   chassis.set_turn_pid(44, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(165, DRIVE_SPEED);
+  chassis.set_drive_pid(130, DRIVE_SPEED * .8, true);
+  chassis.wait_drive();
+
+  // Turn to face goal
+  chassis.set_turn_pid(-70, TURN_SPEED);
+  chassis.wait_drive();
+
+  shoot();
+  pros::delay(SHOT_DELAY);
+  shoot();
+  pros::delay(SHOT_DELAY);
+  shoot();
+
+  // Drive to roller 2
+  chassis.set_turn_pid(-135, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-36, DRIVE_SPEED);
   chassis.wait_drive();
 
   // Get roller
-  chassis.set_turn_pid(-90, TURN_SPEED);
+  chassis.set_swing_pid(ez::RIGHT_SWING, -87, SWING_SPEED);
   chassis.wait_drive();
-  devices::intake = 90;
-  pros::delay(500);
-  devices::intake = 0;
-  chassis.set_drive_pid(-10, DRIVE_SPEED);
-  chassis.wait_drive();
+
   spin_roller(350);
-  chassis.set_drive_pid(5, DRIVE_SPEED);
-  chassis.wait_drive();
 
   // Turn everything off
-  devices::flywheel.move_velocity(0);
   devices::intake = 0;
-}
-
-void test() {
-  chassis.set_drive_pid(30, DRIVE_SPEED);
-  chassis.wait_drive();
-
-  devices::intake = 127;
-  pros::delay(2000);
-  devices::intake = -127;
+  devices::flywheel.move_velocity(0);
 }
 }  // namespace auton

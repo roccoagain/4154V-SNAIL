@@ -6,16 +6,6 @@
 
 namespace drive {
 
-constexpr int intake_speed = 127;       // volts
-constexpr int flywheel_velocity = 380;  // motor rpm
-constexpr int toggle_delay = 200;       // ms
-
-struct {
-  bool flywheel_toggle = true;
-  bool flywheel_angler_toggle = true;
-  bool intake_lifter_toggle;
-} toggles;
-
 void toggle(bool &toggle_variable) {
   toggle_variable = !toggle_variable;
   pros::delay(toggle_delay);
