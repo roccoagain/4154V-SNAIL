@@ -3,7 +3,7 @@
 
 // selector configuration
 #define HUE 60
-#define DEFAULT 4
+#define DEFAULT 3
 #define AUTONS "skills", "left", "right", "awp", "NULL"
 //               1         2        3       4      5
 
