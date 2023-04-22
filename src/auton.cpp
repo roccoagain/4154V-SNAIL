@@ -79,7 +79,7 @@ void right() {
   chassis.reset_drive_sensor();
   chassis.reset_pid_targets();
 
-  devices::flywheel.move_velocity(440);
+  devices::flywheel.move_velocity(450);
 
   // Get roller 1
   devices::intake = 127;
@@ -94,7 +94,7 @@ void right() {
   chassis.wait_drive();
 
   // Turn to face goal 1
-  chassis.set_turn_pid(102, TURN_SPEED);
+  chassis.set_turn_pid(100, TURN_SPEED);
   chassis.wait_drive();
   pros::delay(500);
 
@@ -106,7 +106,7 @@ void right() {
   shoot();
 
   // Set flywheel for midline
-  devices::flywheel.move_velocity(420);
+  devices::flywheel.move_velocity(410);
 
   // Intake 1
   devices::intake = 127;
@@ -117,7 +117,7 @@ void right() {
   pros::delay(1000);
 
   // Face goal 2
-  chassis.set_turn_pid(135, TURN_SPEED);
+  chassis.set_turn_pid(131, TURN_SPEED);
   chassis.wait_drive();
 
   shoot();
@@ -134,7 +134,6 @@ void right() {
   chassis.wait_drive();
 
   // All off
-  devices::intake = 0;
   devices::flywheel.move_velocity(0);
 }
 
@@ -206,9 +205,11 @@ void awp() {
   chassis.set_swing_pid(ez::RIGHT_SWING, -90, SWING_SPEED);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-4, DRIVE_SPEED);
+  chassis.set_drive_pid(-7, DRIVE_SPEED);
   chassis.wait_drive();
   pros::delay(50);
+  chassis.set_drive_pid(10, DRIVE_SPEED);
+  chassis.wait_drive();
 
   // Turn everything off
   devices::intake = 0;
