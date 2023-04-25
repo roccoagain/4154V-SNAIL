@@ -48,6 +48,7 @@ void opcontrol() {
     drive::update_flywheel();
     drive::update_flywheel_angler();
     drive::update_intake_lifter();
+    drive::update_expansion();
 
     pros::delay(10);
   }

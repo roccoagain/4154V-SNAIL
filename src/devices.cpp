@@ -28,7 +28,7 @@ pros::Motor flywheel(9, pros::E_MOTOR_GEARSET_06, true,
 // Pistons
 pros::ADIDigitalOut indexer('A');
 pros::ADIDigitalOut flywheel_angler('B');
-pros::ADIDigitalOut expander('C');
+pros::ADIDigitalOut expander('E');
 pros::ADIDigitalOut intake_lifter('D');
 
 void set_brakes(pros::motor_brake_mode_e mode) {
